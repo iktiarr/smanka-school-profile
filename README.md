@@ -1,0 +1,1 @@
+# smanka-school-profile
