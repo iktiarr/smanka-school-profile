@@ -1,0 +1,3 @@
+25 Feb 2026
+update pembuatan db postgres
+menambah prisma client untuk satabase migration
