@@ -96,13 +96,6 @@ export default function Header() {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-
-        {/* --- ACTIONS & MOBILE BURGER --- */}
-        <div className="flex items-center gap-2">
-          <Button className="hidden sm:flex bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-md px-5 h-9 text-sm transition-all shadow-sm">
-            PPDB 2026
-          </Button>
-
           {/* MOBILE BURGER */}
           <div className="md:hidden">
             <Sheet>
