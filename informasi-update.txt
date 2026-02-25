@@ -1,6 +1,0 @@
-1. bagian header sudah selesai, tinggal isi datanya saja, sama cek desainnya
-2. bagian footer sudah diubah, disesuaikan, minta tolong cek
-3. nambah folder baru \app\components\profil soalnya buat isinya dari per header, itu dibuat terpisah biar gak bingung
-4. nambah halaman about, tapi masih konsep
-5. data yang di header sudah diubah, menyesuaikan 
-6. nambah download gambar 404 di public buat isi kontennya saja
