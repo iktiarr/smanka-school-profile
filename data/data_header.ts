@@ -1,12 +1,15 @@
+// src/data/data_header.ts
+
 export interface NavChild {
   label: string;
   href: string;
+  description?: string;
 }
 
 export interface NavItem {
   label: string;
-  href?: string; 
-  children?: NavChild[]; 
+  href?: string; // Digunakan jika tidak ada children
+  children?: NavChild[]; // Digunakan jika ingin ada dropdown
 }
 
 export const navigationData: NavItem[] = [
@@ -14,48 +17,28 @@ export const navigationData: NavItem[] = [
   {
     label: "Profil",
     children: [
-      { label: "Sambutan Kepala Sekolah", href: "/profil" },
-      { label: "Mars Sekolah", href: "/profil/mars" },
-      { label: "Visi & Misi", href: "/profil/visi-misi" },
-      { label: "Struktural GTK", href: "/profil/struktur" },
+      { label: "Sejarah", href: "/profil/sejarah", description: "Asal usul dan perjalanan sekolah." },
+      { label: "Visi & Misi", href: "/profil/visi-misi", description: "Tujuan dan target masa depan kami." },
+      { label: "Struktur Organisasi", href: "/profil/struktur", description: "Kepengurusan dan staf sekolah." },
     ],
   },
   {
     label: "Akademik",
     children: [
-      { label: "Kurikulum", href: "/akademik/kurikulum" },
-      { label: "Kalender Akademik", href: "/akademik/kalender" },
-      { label: "Jadwal Sekolah", href: "/akademik/ekskul" },
-      { label: "Perangkat Pembelajaran", href: "/akademik/ekskul" },
-      { label: "Karya Siswa/Siswi", href: "/akademik/ekskul" },
+      { label: "Kurikulum", href: "/akademik/kurikulum", description: "Sistem pembelajaran yang diterapkan." },
+      { label: "Jurusan", href: "/akademik/jurusan", description: "Pilihan peminatan bagi siswa." },
+      { label: "Ekstrakurikuler", href: "/akademik/ekskul", description: "Kegiatan pengembangan diri siswa." },
+      { label: "Kurikulum", href: "/akademik/kurikulum", description: "Sistem pembelajaran yang diterapkan." },
+      { label: "Jurusan", href: "/akademik/jurusan", description: "Pilihan peminatan bagi siswa." },
+      { label: "Ekstrakurikuler", href: "/akademik/ekskul", description: "Kegiatan pengembangan diri siswa." },
+      { label: "Kurikulum", href: "/akademik/kurikulum", description: "Sistem pembelajaran yang diterapkan." },
+      { label: "Jurusan", href: "/akademik/jurusan", description: "Pilihan peminatan bagi siswa." },
+      { label: "Ekstrakurikuler", href: "/akademik/ekskul", description: "Kegiatan pengembangan diri siswa." },
+      { label: "Kurikulum", href: "/akademik/kurikulum", description: "Sistem pembelajaran yang diterapkan." },
+      { label: "Jurusan", href: "/akademik/jurusan", description: "Pilihan peminatan bagi siswa." },
+      { label: "Ekstrakurikuler", href: "/akademik/ekskul", description: "Kegiatan pengembangan diri siswa." },
     ],
   },
-  {
-    label: "Asesmen",
-    children: [
-      { label: "ASAS", href: "/akademik/kurikulum" },
-      { label: "ASJ", href: "/akademik/jurusan" },
-      { label: "TKA", href: "/akademik/ekskul" },
-      { label: "Supervisi Guru", href: "/akademik/ekskul" },
-    ],
-  },
-  {
-    label: "Kesiswaan",
-    children: [
-      { label: "Struktural", href: "/akademik/kurikulum" },
-      { label: "Osis/MPK", href: "/akademik/jurusan" },
-      { label: "Ekstrakurikuler", href: "/akademik/ekskul" },
-      { label: "Double Track", href: "/akademik/ekskul" },
-    ],
-  },
-  {
-    label: "Informasi",
-    children: [
-      { label: "Humas & Komite", href: "/akademik/kurikulum" },
-      { label: "Kemitraan", href: "/akademik/jurusan" },
-      { label: "Galeri Prestasi", href: "/akademik/ekskul" },
-      { label: "Kegiatan", href: "/akademik/ekskul" },
-    ],
-  },
-  { label: "Fasilitas", href: "/fasilitas" },
+  { label: "Berita", href: "/berita" },
+  { label: "Kontak", href: "/kontak" },
 ];
