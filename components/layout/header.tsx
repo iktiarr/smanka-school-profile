@@ -14,6 +14,7 @@ export default function Header() {
   const [isHidden, setIsHidden] = useState(false);
   const { scrollY } = useScroll();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -55,6 +56,9 @@ export default function Header() {
 
 =======
 
+=======
+
+>>>>>>> 878e6ab6238e8eff0b779a2439dabfcc93325c03
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
     if (latest > previous && latest > 120) {
@@ -93,6 +97,9 @@ export default function Header() {
             </div>
           </Link>
 
+<<<<<<< HEAD
+>>>>>>> 878e6ab6238e8eff0b779a2439dabfcc93325c03
+=======
 >>>>>>> 878e6ab6238e8eff0b779a2439dabfcc93325c03
           {/* DESKTOP NAV */}
           <nav className="hidden md:flex items-center gap-1">
@@ -263,6 +270,9 @@ export default function Header() {
               </div>
             </motion.div>
           </div>
+<<<<<<< HEAD
+>>>>>>> 878e6ab6238e8eff0b779a2439dabfcc93325c03
+=======
 >>>>>>> 878e6ab6238e8eff0b779a2439dabfcc93325c03
         )}
       </AnimatePresence>

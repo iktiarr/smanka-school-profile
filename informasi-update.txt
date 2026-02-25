@@ -1,3 +1,6 @@
 25 Feb 2026
 update pembuatan db postgres
+<<<<<<< HEAD
 menambah prisma client untuk satabase migration
+=======
+>>>>>>> 878e6ab6238e8eff0b779a2439dabfcc93325c03
