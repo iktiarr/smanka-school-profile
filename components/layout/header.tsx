@@ -83,7 +83,9 @@ export default function Header() {
                     </NavigationMenuContent>
                   </>
                 ) : (
-                  <Link href={item.href || "/"} legacyBehavior passHref>
+                  <Link href={item.href || "/"}>
+                    {/* @next-codemod-error This Link previously used the now removed `legacyBehavior` prop, and has a child that might not be an anchor. The codemod bailed out of lifting the child props to the Link. Check that the child component does not render an anchor, and potentially move the props manually to Link. */
+                    }
                     <NavigationMenuLink className={cn(
                       navigationMenuTriggerStyle(),
                       "bg-transparent font-semibold text-slate-900 hover:bg-black/5 h-9 px-4"
