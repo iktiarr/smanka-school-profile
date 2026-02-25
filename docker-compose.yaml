@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db-sekolah:
+    image: postgres:16-alpine
+    container_name: db_sekolah
+    restart: always
+    environment:
+      POSTGRES_USER: admin_sekolah
+      POSTGRES_PASSWORD: passwordku
+      POSTGRES_DB: sekolah_db
+    ports:
+      - "5433:5432" # Port 5433 (Luar) dipetakan ke 5432 (Dalam Container)
+    volumes:
+      - ./pgdata_sekolah:/var/lib/postgresql/data
+    networks:
+      - sekolah_network
+
+networks:
+  sekolah_network:
+    driver: bridge
