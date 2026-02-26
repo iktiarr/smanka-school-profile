@@ -1,0 +1,7 @@
+<<<<<<<
+1. header sudah selesai
+2. footer sudah selesai
+3. nambah folder baru buat per halamannya 
+4. testing buat halaman about
+5. cek semuanya dulu
+>>>>>>>
