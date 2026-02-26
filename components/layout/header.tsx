@@ -1,226 +1,173 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-import { X, Menu as Burger, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, ChevronRight } from "lucide-react";
 import { navigationData } from "@/data/data_header";
+
+// Shadcn UI Components
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
 export default function Header() {
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isHidden, setIsHidden] = useState(false);
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    if (latest > previous && latest > 120) {
-      setIsHidden(true);
-      setActiveMenu(null);
-    } else {
-      setIsHidden(false);
-    }
-  });
-
-  useEffect(() => {
-    document.body.style.overflow = isMobileOpen ? "hidden" : "unset";
-  }, [isMobileOpen]);
-
   return (
-    <>
-      <motion.nav
-        variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
-        animate={isHidden ? "hidden" : "visible"}
-        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-        className="fixed top-0 inset-x-0 z-50 bg-[#F3C623] h-14 flex items-center shadow-sm"
-      >
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-6 flex items-center justify-between">
+    <header className="sticky top-0 z-50 w-full bg-[#F3C623] transition-all duration-300">
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
 
-          <Link href="/" className="flex items-center gap-3 shrink-0 active:scale-95 transition-transform">
-            <div className="relative w-10 h-10">
-              <Image src="/login-logo.png" alt="Logo" fill className="object-contain" priority />
-            </div>
-            <div className="hidden sm:flex flex-col">
-              <span className="text-base font-black uppercase text-slate-900 leading-none">
-                SMAN 1 KETAPANG
-              </span>
-              <span className="text-[10px] font-bold text-slate-800/70 tracking-widest uppercase mt-1">
-                Sampang Madura
-              </span>
-            </div>
-          </Link>
+        {/* --- LOGO SECTION --- */}
+        <Link href="/" className="flex items-center space-x-3 shrink-0">
+          <div className="relative w-10 h-10 transition-transform active:scale-95">
+            <Image
+              src="/login-logo.png"
+              alt="Logo"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-bold text-slate-900 leading-none text-base tracking-tight uppercase">
+              SMAN 1 KETAPANG
+            </span>
+            <span className="text-[10px] text-slate-800/70 font-medium tracking-wider uppercase mt-0.5">
+              Lampung Selatan
+            </span>
+          </div>
+        </Link>
 
-          {/* DESKTOP NAV */}
-          <nav className="hidden md:flex items-center gap-1">
+        {/* --- DESKTOP NAVIGATION --- */}
+        <NavigationMenu className="hidden md:flex">
+          <NavigationMenuList className="gap-0">
             {navigationData.map((item) => (
-              <div
-                key={item.label}
-                onMouseEnter={() => item.children && setActiveMenu(item.label)}
-                onMouseLeave={() => setActiveMenu(null)}
-                className="relative"
-              >
+              <NavigationMenuItem key={item.label}>
                 {item.children ? (
                   <>
-                    <button
-                      className={cn(
-                        "px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all flex items-center gap-1 rounded-lg",
-                        activeMenu === item.label
-                          ? "bg-yellow-300 text-slate-900"
-                          : "text-slate-800 hover:bg-yellow-100"
-                      )}
-                    >
+                    <NavigationMenuTrigger className="bg-transparent hover:bg-black/5 focus:bg-black/5 text-slate-900 font-semibold h-9 px-4">
                       {item.label}
-                      <ChevronDown
-                        size={15}
-                        className={cn(
-                          "transition-transform duration-300",
-                          activeMenu === item.label && "rotate-180"
-                        )}
-                      />
-                    </button>
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[400px] gap-1 p-3 md:w-[500px] md:grid-cols-2 bg-white rounded-lg shadow-xl border border-slate-100">
+                        {item.children.map((child) => (
+                          <li key={child.label}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                href={child.href}
+                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-50"
+                              >
+                                <div className="text-sm font-bold text-slate-900 flex items-center gap-1">
+                                  {child.label}
+                                </div>
+                                <p className="line-clamp-1 text-[11px] leading-snug text-slate-500 font-medium">
+                                  {child.description}
+                                </p>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </>
+                ) : (
+                  <Link href={item.href || "/"}>
+                    {/* @next-codemod-error This Link previously used the now removed `legacyBehavior` prop, and has a child that might not be an anchor. The codemod bailed out of lifting the child props to the Link. Check that the child component does not render an anchor, and potentially move the props manually to Link. */
+                    }
+                    <NavigationMenuLink className={cn(
+                      navigationMenuTriggerStyle(),
+                      "bg-transparent font-semibold text-slate-900 hover:bg-black/5 h-9 px-4"
+                    )}>
+                      {item.label}
+                    </NavigationMenuLink>
+                  </Link>
+                )}
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+        {/* MOBILE BURGER */}
+        <div className="md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-slate-900 hover:bg-black/5 rounded-md">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            {/* Custom Animation: Fade In (data-[state=open]:animate-in data-[state=open]:fade-in) */}
+            <SheetContent
+              side="right"
+              className="w-[70%] p-0 border-none bg-white flex flex-col data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:slide-in-from-right-0 duration-300"
+            >
+              {/* Header Mobile Menu */}
+              <SheetHeader className="p-5 bg-[#F3C623] text-left shrink-0">
+                <SheetTitle className="flex items-center gap-3">
+                  <Image src="/login-logo.png" alt="Logo" width={32} height={32} />
+                  <span className="text-sm font-bold text-slate-900 uppercase tracking-tight">Navigasi</span>
+                </SheetTitle>
+              </SheetHeader>
 
-                    <AnimatePresence>
-                      {activeMenu === item.label && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="absolute left-0 top-full pt-2 z-40"
+              {/* Scroll Area Nav */}
+              <ScrollArea className="flex-1 px-4 py-4 overflow-y-auto">
+                <nav className="flex flex-col gap-1">
+                  {navigationData.map((item) => (
+                    <div key={item.label} className="py-1">
+                      {item.href ? (
+                        <Link
+                          href={item.href}
+                          className="flex items-center justify-between p-3 rounded-md hover:bg-slate-50 active:bg-slate-100 transition-colors"
                         >
-                          <div className="bg-white rounded-xl shadow-xl border border-slate-100 p-2 min-w-[220px]">
-                            {item.children.map((child) => (
+                          <span className="text-sm font-bold text-slate-900">{item.label}</span>
+                          <ChevronRight size={16} className="text-slate-400" />
+                        </Link>
+                      ) : (
+                        <div className="space-y-1">
+                          <span className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                            {item.label}
+                          </span>
+                          <div className="flex flex-col gap-0.5 mt-1">
+                            {item.children?.map((child) => (
                               <Link
                                 key={child.label}
                                 href={child.href}
-                                className="block p-3 rounded-lg text-sm font-bold text-slate-700 hover:bg-yellow-100 hover:text-yellow-500 transition-colors"
+                                className="flex items-center justify-between p-3 rounded-md hover:bg-slate-50 transition-colors"
                               >
-                                {child.label}
+                                <div className="flex flex-col">
+                                  <span className="text-sm font-semibold text-slate-800">{child.label}</span>
+                                </div>
+                                <ChevronRight size={14} className="text-slate-400" />
                               </Link>
                             ))}
                           </div>
-                        </motion.div>
+                        </div>
                       )}
-                    </AnimatePresence>
-                  </>
-                ) : (
-                  <Link
-                    href={item.href || "/"}
-                    className="px-4 py-2 text-sm font-bold uppercase tracking-wider text-slate-800 hover:bg-yellow-300 rounded-lg transition-all"
-                  >
-                    {item.label}
-                  </Link>
-                )}
+                    </div>
+                  ))}
+                </nav>
+              </ScrollArea>
+
+              {/* Footer Mobile (Fixed) */}
+              <div className="p-4 border-t border-slate-100 shrink-0">
+                <Button className="w-full bg-[#F3C623] hover:bg-[#E2B612] text-slate-900 font-bold h-11 rounded-md shadow-sm">
+                  PPDB 2026
+                </Button>
               </div>
-            ))}
-          </nav>
-
-          {/* RIGHT SIDE */}
-          <div className="flex items-center gap-3">
-            <Link href="/ppdb" className="hidden lg:block">
-              <button className="bg-slate-900 text-white px-6 py-2.5 rounded-lg text-xs font-bold hover:bg-slate-800 transition-all active:scale-95">
-                PPDB 2026
-              </button>
-            </Link>
-
-            <button
-              onClick={() => setIsMobileOpen(true)}
-              className="md:hidden p-2 text-slate-900 hover:bg-black/5 rounded-lg transition"
-            >
-              <Burger size={26} />
-            </button>
-          </div>
+            </SheetContent>
+          </Sheet>
         </div>
-      </motion.nav>
-
-      {/* MOBILE MENU */}
-      <AnimatePresence>
-        {isMobileOpen && (
-          <div className="fixed inset-0 z-[100] flex justify-end">
-            {/* Backdrop Overlay */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMobileOpen(false)}
-              className="absolute inset-0 bg-white/50 backdrop-blur-lg"
-            />
-
-            {/* Side Panel */}
-            <motion.div
-              initial={{ x: "100%", opacity: 0.5 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "100%", opacity: 0.5 }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="relative w-[80%] max-w-xs bg-white h-full shadow-2xl flex flex-col"
-            >
-              {/* MOBILE HEADER */}
-              <div className="h-15 px-5 bg-[#F3C623] rounded-b-2xl flex items-center justify-between shrink-0 ">
-                <div className="flex items-center gap-2 ">
-                  <Image src="/login-logo.png" alt="Logo" width={32} height={32} />
-                  <span className="text-sm font-black uppercase text-slate-900 tracking-tight">
-                    Menu
-                  </span>
-                </div>
-                <button
-                  onClick={() => setIsMobileOpen(false)}
-                  className="p-2 hover:bg-black/10 rounded-full transition-colors"
-                >
-                  <X size={22} className="text-slate-900" />
-                </button>
-              </div>
-
-              {/* MOBILE NAV LIST */}
-              <div className="flex-1 overflow-y-auto p-2 space-y-1">
-                {navigationData.map((item) => (
-                  <div key={item.label} className="py-1">
-                    {item.href ? (
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsMobileOpen(false)}
-                        className="text-[15px] flex justify-between items-center p-2 rounded-xl hover:bg-yellow-100 font-bold text-slate-900 transition-colors"
-                      >
-                        {item.label}
-                        <ChevronRight size={18} className="text-slate-900" />
-                      </Link>
-                    ) : (
-                      <div className="mt-2">
-                        <div className="text-[15px] font-black text-slate-900 px-2 mb-2">
-                          {item.label}
-                        </div>
-                        <div className="space-y-1">
-                          {item.children?.map((child) => (
-                            <Link
-                              key={child.label}
-                              href={child.href}
-                              onClick={() => setIsMobileOpen(false)}
-                              className="flex justify-between items-center p-2 rounded-xl hover:bg-yellow-100 text-sm font-semibold text-slate-700 transition-colors"
-                            >
-                              {child.label}
-                              <ChevronRight size={16} className="text-slate-900" />
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* BOTTOM ACTION */}
-              <div className="p-5 border-t border-slate-900 rounded-2xl">
-                <Link href="/ppdb" onClick={() => setIsMobileOpen(false)}>
-                  <button className="w-full bg-[#F3C623] hover:bg-[#E2B612] text-slate-900 font-bold py-4 rounded-xl text-sm shadow-sm transition-transform active:scale-95">
-                    DAFTAR PPDB 2026
-                  </button>
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-    </>
+      </div>
+    </header>
   );
 }
